@@ -1,11 +1,15 @@
+from fastapi import FastAPI
 import mysql.connector
 from datetime import datetime
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from email_utils import enviar_email
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
+app = FastAPI()
+
 
 def checar_mentorias():
     conn = mysql.connector.connect(
@@ -45,8 +49,15 @@ def checar_mentorias():
     cursor.close()
     conn.close()
 
-# Roda todo dia às 8h
-scheduler = BlockingScheduler()
-scheduler.add_job(checar_mentorias, "cron", hour=3, minute=38)
-print("🔔 Job agendado para rodar diariamente às 08:00.")
+# Endpoint para disparar notificações manualmente
+@app.post("/notificacao/disparar")
+def disparar_notificacoes():
+    checar_mentorias()
+    return {"status": "Notificações disparadas"}
+
+# Agendamento automático
+scheduler = BackgroundScheduler()
+scheduler.add_job(checar_mentorias, "cron", hour=8, minute=0)
 scheduler.start()
+
+print("🔔 Job agendado para rodar diariamente às 08:00.")
