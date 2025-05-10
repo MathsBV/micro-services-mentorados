@@ -1,1 +1,1 @@
- 
+# Torna o diretório um módulo Python 

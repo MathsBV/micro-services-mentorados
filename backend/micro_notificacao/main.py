@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import mysql.connector
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from email_utils import enviar_email
+from .email_utils import enviar_email
 from dotenv import load_dotenv
 import os
 

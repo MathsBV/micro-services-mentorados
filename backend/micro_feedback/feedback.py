@@ -1,6 +1,6 @@
-from models import SugestaoSaida
+from .models import SugestaoSaida
 from typing import List
-from db import get_connection
+from .db import get_connection
 
 def gerar_sugestoes_por_interesse(mentored_id: int) -> List[SugestaoSaida]:
     conn = get_connection()

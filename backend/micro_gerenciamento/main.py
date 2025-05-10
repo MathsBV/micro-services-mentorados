@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from models import SugestaoSaida
-from gerenciamento import gerar_sugestoes_por_interesse
+from .models import SugestaoSaida
+from .gerenciamento import gerar_sugestoes_por_interesse
 from typing import List
 
 app = FastAPI()
