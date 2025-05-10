@@ -5,21 +5,18 @@ Sistema de mentoria desenvolvido com FastAPI e React.
 ## Estrutura do Projeto
 
 ```
-.
-├── backend/
-│   ├── auth/
-│   ├── config/
-│   ├── models/
-│   ├── routes/
-│   ├── main.py
-│   ├── requirements.txt
-│   └── gunicorn_config.py
-├── frontend/
-│   ├── index.html
-│   ├── login.html
-│   ├── register.html
-│   └── dashboard.html
-└── README.md
+backend/
+├── app.py
+├── requirements.txt
+├── gunicorn_config.py
+├── startup.txt
+├── models/
+│   ├── user.py
+│   └── mentoria.py
+├── micro-notificacao/
+├── micro_sugestao/
+├── micro-gerenciamento/
+├── ... (outros microsserviços)
 ```
 
 ## Requisitos
