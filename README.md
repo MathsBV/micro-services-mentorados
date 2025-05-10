@@ -1,4 +1,113 @@
- 🤝 Descritivo do Microserviço “Mentorados”
+# Plataforma de Mentoria
+
+Sistema de mentoria desenvolvido com FastAPI e React.
+
+## Estrutura do Projeto
+
+```
+.
+├── backend/
+│   ├── auth/
+│   ├── config/
+│   ├── models/
+│   ├── routes/
+│   ├── main.py
+│   ├── requirements.txt
+│   └── gunicorn_config.py
+├── frontend/
+│   ├── index.html
+│   ├── login.html
+│   ├── register.html
+│   └── dashboard.html
+└── README.md
+```
+
+## Requisitos
+
+- Python 3.8+
+- Node.js 14+
+- SQLite3
+
+## Configuração do Ambiente
+
+1. Clone o repositório:
+```bash
+git clone [url-do-repositorio]
+cd [nome-do-diretorio]
+```
+
+2. Configure o ambiente virtual Python:
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+.\venv\Scripts\activate   # Windows
+```
+
+3. Instale as dependências do backend:
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+4. Configure as variáveis de ambiente:
+```bash
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+```
+
+## Executando o Projeto
+
+### Backend
+
+```bash
+cd backend
+./start.sh
+```
+
+O servidor estará disponível em `http://localhost:8000`
+
+### Frontend
+
+```bash
+cd frontend
+python -m http.server 3000
+```
+
+A aplicação estará disponível em `http://localhost:3000`
+
+## API Endpoints
+
+- `POST /auth/register` - Registro de usuário
+- `POST /auth/login` - Login de usuário
+- `GET /auth/me` - Informações do usuário logado
+
+## Deploy
+
+### Azure App Service
+
+1. Configure as variáveis de ambiente no Azure Portal
+2. Faça o deploy usando Azure CLI ou GitHub Actions
+
+## Segurança
+
+- Todas as senhas são hasheadas usando bcrypt
+- Autenticação via JWT
+- CORS configurado para origens específicas
+- Proteção contra ataques comuns
+
+## Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+🤝 Descritivo do Microserviço "Mentorados"
 
 Este **microserviço** faz parte da **Plataforma de Mentoria** desenvolvida na disciplina de 
 **Engenharia de Software com Microsserviços** da **Universidade Presbiteriana Mackenzie**. 
