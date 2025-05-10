@@ -1,29 +1,44 @@
-from sqlalchemy import Boolean, Column, Integer, String, DateTime
-from sqlalchemy.sql import func
-from ..config.database import Base
-from passlib.context import CryptContext
+from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
 
-# Configuração para hash de senha
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+db = SQLAlchemy()
 
-class User(Base):
+class User(db.Model):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String, nullable=False)
-    email = Column(String, unique=True, index=True, nullable=False)
-    telefone = Column(String)
-    senha_hash = Column(String, nullable=False)
-    area_interesse = Column(String)
-    nivel_experiencia = Column(String)
-    objetivos = Column(String)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    telefone = db.Column(db.String(20))
+    senha_hash = db.Column(db.String(128))
+    area_interesse = db.Column(db.String(100))
+    nivel_experiencia = db.Column(db.String(50))
+    objetivos = db.Column(db.Text)
+    is_active = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    @staticmethod
-    def get_password_hash(password: str) -> str:
-        return pwd_context.hash(password)
+    # Relacionamentos
+    mentorias_mentor = db.relationship('Mentoria', foreign_keys='Mentoria.mentor_id', backref='mentor', lazy=True)
+    mentorias_mentorado = db.relationship('Mentoria', foreign_keys='Mentoria.mentorado_id', backref='mentorado', lazy=True)
 
-    def verify_password(self, plain_password: str) -> bool:
-        return pwd_context.verify(plain_password, self.senha_hash) 
+    def set_password(self, password):
+        self.senha_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.senha_hash, password)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nome': self.nome,
+            'email': self.email,
+            'telefone': self.telefone,
+            'area_interesse': self.area_interesse,
+            'nivel_experiencia': self.nivel_experiencia,
+            'objetivos': self.objetivos,
+            'is_active': self.is_active,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat()
+        } 

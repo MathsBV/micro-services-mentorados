@@ -1,6 +1,6 @@
 import multiprocessing
 
-# Configurações do Gunicorn
+# Configurações do Gunicorn para produção Linux
 bind = "0.0.0.0:8000"
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = "uvicorn.workers.UvicornWorker"
@@ -18,4 +18,7 @@ limit_request_field_size = 8190
 # Configurações de performance
 max_requests = 1000
 max_requests_jitter = 50
-worker_connections = 1000 
+worker_connections = 1000
+
+# Configurações de logging
+access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"' 

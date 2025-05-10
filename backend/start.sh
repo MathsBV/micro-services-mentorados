@@ -9,5 +9,5 @@ mkdir -p logs
 # Instalar dependências
 pip install -r requirements.txt
 
-# Iniciar o Gunicorn
-gunicorn -c gunicorn_config.py main:app 
+# Iniciar o Flask com Gunicorn
+gunicorn -w 4 -b 0.0.0.0:8000 app:app 
